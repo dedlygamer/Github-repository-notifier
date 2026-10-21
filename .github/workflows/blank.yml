@@ -21,13 +21,13 @@ jobs:
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pyinstaller
-        # This python script safely strips out all mac-specific lines from requirements.txt
-        python -c "import os; f=open('requirements.txt','r'); lines=[l for l in f.readlines() if 'pyobjc' not in l]; f.close(); f=open('requirements.txt','w'); f.writelines(lines); f.close()"
-        pip install -r requirements.txt
+        pip install pyinstaller pillow pystray
+        # If you have other cross-platform requirements, uncomment below:
+        # pip install -r requirements.txt
 
     - name: Build EXE with PyInstaller
       run: |
+        # Semicolon (;) is required on Windows runner to bundle assets
         pyinstaller --onefile --windowed --add-data "menubarTemplate.png;." main.py
 
     - name: Upload EXE Artifact
